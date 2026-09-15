@@ -36,3 +36,7 @@ Internal analysis is always SI (`m`, `kN`, `kN/m`, `kN·m`). The UI can display 
 - `src/engine/analysis.js` — reusable reaction / SFD / BMD engine
 - `src/components/` — dashboard UI, beam drawing, and Recharts diagrams
 - `src/engine/examples.js` — textbook demo beams
+
+  ## Project Contributors
+  - Suresh Kumar
+  - Sourav Kumar Rai
