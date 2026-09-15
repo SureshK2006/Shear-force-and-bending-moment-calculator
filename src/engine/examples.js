@@ -1,0 +1,163 @@
+import { SUPPORT_TYPES, uid } from './constants.js'
+
+export function createEmptyModel(length = 6) {
+  return {
+    length,
+    supportType: SUPPORT_TYPES.SIMPLY_SUPPORTED,
+    supportA: 0,
+    supportB: length,
+    pointLoads: [],
+    udls: [],
+    pointMoments: [],
+  }
+}
+
+export const EXAMPLES = [
+  {
+    id: 'ss-midspan',
+    name: 'SS · mid-span point load',
+    blurb: 'L = 4 m, P = 10 kN at mid-span. RA = RB = 5 kN, Mmax = 10 kN·m.',
+    model: {
+      length: 4,
+      supportType: SUPPORT_TYPES.SIMPLY_SUPPORTED,
+      supportA: 0,
+      supportB: 4,
+      pointLoads: [{ id: uid('p'), magnitude: 10, position: 2 }],
+      udls: [],
+      pointMoments: [],
+    },
+  },
+  {
+    id: 'ss-udl',
+    name: 'SS · full UDL',
+    blurb: 'L = 6 m, w = 10 kN/m. RA = RB = 30 kN, Mmax = wL²/8 = 45 kN·m.',
+    model: {
+      length: 6,
+      supportType: SUPPORT_TYPES.SIMPLY_SUPPORTED,
+      supportA: 0,
+      supportB: 6,
+      pointLoads: [],
+      udls: [{ id: uid('u'), magnitude: 10, start: 0, end: 6 }],
+      pointMoments: [],
+    },
+  },
+  {
+    id: 'ss-two-loads',
+    name: 'SS · two point loads',
+    blurb: 'L = 8 m, 20 kN at 2 m and 40 kN at 6 m. RA = 25 kN, RB = 35 kN.',
+    model: {
+      length: 8,
+      supportType: SUPPORT_TYPES.SIMPLY_SUPPORTED,
+      supportA: 0,
+      supportB: 8,
+      pointLoads: [
+        { id: uid('p'), magnitude: 20, position: 2 },
+        { id: uid('p'), magnitude: 40, position: 6 },
+      ],
+      udls: [],
+      pointMoments: [],
+    },
+  },
+  {
+    id: 'ss-partial-udl',
+    name: 'SS · partial UDL',
+    blurb: 'L = 8 m, 10 kN/m from 0–4 m. RA = 30 kN, RB = 10 kN, Mmax = 45 kN·m at 3 m.',
+    model: {
+      length: 8,
+      supportType: SUPPORT_TYPES.SIMPLY_SUPPORTED,
+      supportA: 0,
+      supportB: 8,
+      pointLoads: [],
+      udls: [{ id: uid('u'), magnitude: 10, start: 0, end: 4 }],
+      pointMoments: [],
+    },
+  },
+  {
+    id: 'cantilever-tip',
+    name: 'Cantilever · tip load',
+    blurb: 'L = 3 m, P = 15 kN at free end. RA = 15 kN, MA = −45 kN·m.',
+    model: {
+      length: 3,
+      supportType: SUPPORT_TYPES.CANTILEVER_LEFT,
+      supportA: 0,
+      supportB: 3,
+      pointLoads: [{ id: uid('p'), magnitude: 15, position: 3 }],
+      udls: [],
+      pointMoments: [],
+    },
+  },
+  {
+    id: 'cantilever-udl',
+    name: 'Cantilever · full UDL',
+    blurb: 'L = 4 m, w = 5 kN/m. RA = 20 kN, MA = −40 kN·m.',
+    model: {
+      length: 4,
+      supportType: SUPPORT_TYPES.CANTILEVER_LEFT,
+      supportA: 0,
+      supportB: 4,
+      pointLoads: [],
+      udls: [{ id: uid('u'), magnitude: 5, start: 0, end: 4 }],
+      pointMoments: [],
+    },
+  },
+  {
+    id: 'overhang',
+    name: 'Overhanging SS beam',
+    blurb: 'L = 10 m, supports at 2 m and 8 m, tip and mid-span loads.',
+    model: {
+      length: 10,
+      supportType: SUPPORT_TYPES.SIMPLY_SUPPORTED,
+      supportA: 2,
+      supportB: 8,
+      pointLoads: [
+        { id: uid('p'), magnitude: 10, position: 0 },
+        { id: uid('p'), magnitude: 20, position: 5 },
+        { id: uid('p'), magnitude: 10, position: 10 },
+      ],
+      udls: [],
+      pointMoments: [],
+    },
+  },
+  {
+    id: 'propped-udl',
+    name: 'Propped cantilever · UDL',
+    blurb: 'L = 4 m, w = 10 kN/m. RA = 25 kN, RB = 15 kN, MA = −20 kN·m.',
+    model: {
+      length: 4,
+      supportType: SUPPORT_TYPES.PROPPED_CANTILEVER,
+      supportA: 0,
+      supportB: 4,
+      pointLoads: [],
+      udls: [{ id: uid('u'), magnitude: 10, start: 0, end: 4 }],
+      pointMoments: [],
+    },
+  },
+  {
+    id: 'ss-moment',
+    name: 'SS · mid-span couple',
+    blurb: 'L = 5 m, M = 20 kN·m clockwise at mid-span.',
+    model: {
+      length: 5,
+      supportType: SUPPORT_TYPES.SIMPLY_SUPPORTED,
+      supportA: 0,
+      supportB: 5,
+      pointLoads: [],
+      udls: [],
+      pointMoments: [{ id: uid('m'), magnitude: 20, position: 2.5 }],
+    },
+  },
+  {
+    id: 'mixed',
+    name: 'Mixed loads demo',
+    blurb: 'Point load, partial UDL and applied moment on a simply supported beam.',
+    model: {
+      length: 8,
+      supportType: SUPPORT_TYPES.SIMPLY_SUPPORTED,
+      supportA: 0,
+      supportB: 8,
+      pointLoads: [{ id: uid('p'), magnitude: 25, position: 2 }],
+      udls: [{ id: uid('u'), magnitude: 8, start: 4, end: 7 }],
+      pointMoments: [{ id: uid('m'), magnitude: 12, position: 5 }],
+    },
+  },
+]
